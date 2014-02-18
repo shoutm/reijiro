@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131015020453) do
+ActiveRecord::Schema.define(version: 20140218001839) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "checks", force: true do |t|
     t.integer  "word_id"
@@ -22,8 +25,8 @@ ActiveRecord::Schema.define(version: 20131015020453) do
     t.date     "created_on"
   end
 
-  add_index "checks", ["created_on"], name: "index_checks_on_created_on"
-  add_index "checks", ["word_id"], name: "index_checks_on_word_id"
+  add_index "checks", ["created_on"], name: "index_checks_on_created_on", using: :btree
+  add_index "checks", ["word_id"], name: "index_checks_on_word_id", using: :btree
 
   create_table "clips", force: true do |t|
     t.integer  "word_id"
@@ -32,23 +35,23 @@ ActiveRecord::Schema.define(version: 20131015020453) do
     t.datetime "updated_at"
   end
 
-  add_index "clips", ["status", "updated_at", "word_id"], name: "index_clips_on_status_and_updated_at_and_word_id"
-  add_index "clips", ["word_id"], name: "index_clips_on_word_id", unique: true
+  add_index "clips", ["status", "updated_at", "word_id"], name: "index_clips_on_status_and_updated_at_and_word_id", using: :btree
+  add_index "clips", ["word_id"], name: "index_clips_on_word_id", unique: true, using: :btree
 
   create_table "inverts", force: true do |t|
     t.string  "token"
     t.integer "item_id"
   end
 
-  add_index "inverts", ["item_id"], name: "index_inverts_on_item_id"
-  add_index "inverts", ["token"], name: "index_inverts_on_token"
+  add_index "inverts", ["item_id"], name: "index_inverts_on_item_id", using: :btree
+  add_index "inverts", ["token"], name: "index_inverts_on_token", using: :btree
 
   create_table "items", force: true do |t|
-    t.string "entry"
-    t.text   "body"
+    t.text "entry"
+    t.text "body"
   end
 
-  add_index "items", ["entry"], name: "index_items_on_entry"
+  add_index "items", ["entry"], name: "index_items_on_entry", using: :btree
 
   create_table "levels", force: true do |t|
     t.string  "entry"
@@ -57,7 +60,7 @@ ActiveRecord::Schema.define(version: 20131015020453) do
     t.boolean "known",      default: false
   end
 
-  add_index "levels", ["entry"], name: "index_levels_on_entry"
+  add_index "levels", ["entry"], name: "index_levels_on_entry", using: :btree
 
   create_table "words", force: true do |t|
     t.string  "entry"
