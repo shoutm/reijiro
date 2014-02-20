@@ -38,6 +38,7 @@ class Word < ActiveRecord::Base
         @word = Word.new(entry: entry, thesaurus: thesaurus, definition: definition)
         @word.build_clip(status: 0)
         @word.save!
+        @word
       end
     end
 
